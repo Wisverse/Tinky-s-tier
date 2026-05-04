@@ -1,235 +1,283 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wisverse</title><style>
-:root{
-    --main:#3b82f6;
-    --bg1:#0f172a;
-    --bg2:#1e3a8a;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Grevius | Wisverse Wiki</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --accent: #60a5fa;
+            --bg-dark: #020617;
+            --bg-card: rgba(15, 23, 42, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --tier-color: #ff4757; /* Cor para Tiers altos */
+        }
 
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, var(--bg1), var(--bg2));
-    color: white;
-    overflow-x: hidden;
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* FUNDO ANIMADO MELHORADO */
-body::before {
-    content: "";
-    position: fixed;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(59,130,246,0.15) 1px, transparent 1px);
-    background-size: 40px 40px;
-    animation: moveBg 15s linear infinite;
-    z-index: -1;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: #e2e8f0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-@keyframes moveBg {
-    from { transform: translate(0,0); }
-    to { transform: translate(-80px,-80px); }
-}
+        /* Fundo Animado */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                linear-gradient(rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 0.8)),
+                url('https://transparenttextures.com');
+            z-index: -1;
+        }
 
-/* HEADER */
-.topbar {
-    text-align: center;
-    padding: 30px 10px;
-}
+        /* Header Estilo Wiki */
+        .header {
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-.logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-size: 38px;
-    font-weight: bold;
-    color: var(--main);
-    text-shadow: 0 0 20px var(--main);
-}
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-area img { width: 35px; border-radius: 50%; border: 2px solid var(--primary); }
+        .logo-text { font-weight: 900; letter-spacing: 2px; color: var(--primary); font-size: 1.2rem; }
 
-.logo img{
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 0 10px var(--main);
-}
+        /* Container Principal */
+        .wiki-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: 1fr 320px; /* Layout de Wiki */
+            gap: 30px;
+            padding: 0 20px;
+        }
 
-.logo img{
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 0 15px var(--main);
-}
+        /* Artigo */
+        .article {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
 
-.subtitle {
-    font-size: 14px;
-    color: #93c5fd;
-    letter-spacing: 2px;
-}
+        .char-name {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            border-bottom: 3px solid var(--primary);
+            display: inline-block;
+        }
 
-/* CONTAINER */
-.main {
-    max-width: 900px;
-    margin: auto;
-    background: rgba(17,24,39,0.85);
-    backdrop-filter: blur(12px);
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 0 40px rgba(0,0,0,0.8);
-    animation: fade 1s ease;
-}
+        /* Infobox (A barrinha lateral do VS Battles) */
+        .infobox {
+            background: #0f172a;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            padding: 15px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
 
-@keyframes fade {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        .infobox-title {
+            text-align: center;
+            font-weight: bold;
+            background: var(--primary);
+            margin: -15px -15px 15px -15px;
+            padding: 10px;
+            border-radius: 7px 7px 0 0;
+        }
 
-.title {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
+        .infobox img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+        }
 
-/* AVISO ESTILO POPUP */
-.warning {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid var(--main);
-    box-shadow: 0 0 30px rgba(0,0,0,0.8);
-    text-align: center;
-    z-index: 10;
-}
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
 
-.warning button {
-    margin-top: 10px;
-    padding: 5px 15px;
-    border: none;
-    background: var(--main);
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
+        .info-label { font-weight: bold; color: var(--accent); }
 
-/* IMAGEM */
-.image {
-    text-align: center;
-    margin: 15px 0;
-}
+        /* Estilização de Tiers */
+        .tier-badge {
+            background: var(--tier-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
 
-.image img {
-    width: 100%;
-    max-width: 420px;
-    border-radius: 12px;
-    box-shadow: 0 0 20px black;
-    transition: 0.4s;
-}
+        /* Abas (Tabs) */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
 
-.image img:hover {
-    transform: scale(1.07) rotate(1deg);
-}
+        .tab {
+            padding: 8px 20px;
+            background: #1e293b;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
 
-/* MENU */
-.toc {
-    border: 1px solid #334155;
-    padding: 12px;
-    margin: 20px 0;
-    background: #1e293b;
-    border-radius: 12px;
-}
+        .tab.active { background: var(--primary); font-weight: bold; }
 
-.toc a {
-    color: #60a5fa;
-    text-decoration: none;
-}
+        /* Seções */
+        h2 {
+            margin: 30px 0 15px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-.toc a:hover {
-    color: white;
-}
+        h2::after {
+            content: "";
+            height: 2px;
+            background: var(--border);
+            flex: 1;
+        }
 
-h2 {
-    border-bottom: 2px solid var(--main);
-    padding-bottom: 5px;
-}
+        .content-box {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
 
-/* STATS MAIS BONITO */
-.stats {
-    background: #1e293b;
-    padding: 15px;
-    border-radius: 12px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
+        /* Popup */
+        #popup {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--primary);
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 9999;
+            animation: slideIn 0.5s ease-out;
+        }
 
-.stat {
-    background: #0f172a;
-    padding: 10px;
-    border-radius: 8px;
-    border-left: 3px solid var(--main);
-}
+        @keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
 
-/* BOTÃO VOLTAR TOPO */
-#topBtn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: var(--main);
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50px;
-    cursor: pointer;
-}
-</style></head><body><!-- AVISO POPUP --><div class="warning" id="popup">
-    <p><b>Aviso!</b><br>O site ainda não está finalizado.<br>Este é o primeiro personagem do Wisverse.</p>
-    <button onclick="document.getElementById('popup').style.display='none'">Fechar</button>
-</div><div class="topbar">
-    <div class="logo">
-    <img src="https://i.postimg.cc/mg4qbM3y/469-Sem-Titulo-20260426171423.png">
-    ᏔᏆՏᏙᎬᎡՏᎬ
+        #popup button {
+            background: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Mobile */
+        @media (max-width: 850px) {
+            .wiki-container { grid-template-columns: 1fr; }
+            .infobox { position: relative; top: 0; order: -1; }
+        }
+    </style> 
+</head>
+<body>
+
+<header class="header">
+    <div class="logo-area">
+        <img src="https://i.postimg.cc/8P2GDHsq/469-Sem-Titulo-20260427124350.png" alt="Logo">
+        <span class="logo-text">WISVERSE WIKI</span>
+    </div>
+    <nav>
+    <a href="https://discord.gg/u5wBhMsyf" target="_blank" class="chat-btn">Chat</a>
+</nav>
+</header>
+
+<div class="wiki-container">
+    
+    <!-- Artigo Principal -->
+    <main class="article">
+        <h1 class="char-name">General Grevius</h1>
+ 
+
+        <p><b>General Grevius</b> um dos vilões centrais da quinta temporada da novel croosover de Youtuber a principal do wisverse.</p>
+
+        <h2 id="resumo">Resumo</h2>
+        <div class="content-box">
+            Ele é um robô contratado pelo Ash que ri Para matar Fluxes,Aeon,Ash,Arthur,Striker
+        </div>
+
+        <h2 id="poderes">Poderes e Habilidades</h2>
+        <div class="content-box">
+            <ul>
+                <li><b>sem informações:</b></li>
+                <li><b>:</b></li>
+                <li><b>:</b></li>
+            </ul>
+        </div>
+
+        <h2 id="stats">Estatísticas Detalhadas</h2>
+        <p><b></b> <span class="tier-badge">sem informações</span></span> </p>
+        <p><b></b> </p>
+        <p><b></b> </p>
+    </main>
+
+    <!-- Barra Lateral (Infobox) -->
+    <aside class="infobox">
+        <div class="infobox-title">General Grevius</div>
+        <img src="https://media.tenor.com/PkwKq3o1Uv8AAAAM/reacion-poder.gif" alt="General Grevius">
+        
+        <div class="info-row">
+            <span class="info-label">Tier:</span>
+            <span class="tier-badge">1-C</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Verso:</span>
+            <span>Wisverse</span>
+        </div>
+        <div class="info-row">
+            <span class="info-label">Origem:</span>
+            <span>Desconhecida</span>
+        </div>
+        <div class="info-row">
+        </div>
+        <div class="info-row">
+            <span class="info-label">Gênero:</span>
+            <span>Masculino</span>
+        </div>
+        <div class="info-row"></div>
+        </div>
+    </aside>
+
 </div>
-    <div class="subtitle">NOVELS</div>
-</div><div class="main"><div class="title">General Grevius</div>
 
-<div class="image">
-    <img src="https://media.tenor.com/PkwKq3o1Uv8AAAAM/reacion-poder.gif">
+<!-- Popup Estilizado -->
+<div id="popup">
+    <span>⚠️ Site em desenvolvimento (Beta)</span>
+    <button onclick="this.parentElement.style.display='none'">OK</button>
 </div>
-
-<div class="toc">
-    <b>Conteúdo</b>
-    <ol>
-        <li><a href="#resumo">Resumo</a></li>
-        <li><a href="#poderes">Poderes</a></li>
-    </ol>
-</div>
-
-<h2 id="resumo">Resumo</h2>
-<p>
-Um robô assassino contratado por Ash para eliminar múltiplas entidades poderosas como Fluxes e Aeon.
-</p>
-
-<h2 id="poderes">Poderes e Estatísticas</h2>
-
-<div class="stats">
-    <div class="stat"><b>Nível:</b> 1-C</div>
-    <div class="stat"><b>Nome:</b> General Grevius</div>
-    <div class="stat"><b>Origem:</b> Wisverse</div>
-    <div class="stat"><b>Sexo:</b> Masculino</div>
-    <div class="stat"><b>Idade:</b> N/A</div>
-    <div class="stat"><b>Poder:</b> ...</div>
-</div>
-
-</div><button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 </body>
 </html>
